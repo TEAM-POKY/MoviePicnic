@@ -5,6 +5,7 @@
 <mapper namespace="www.project.repository.CommentMapper">
 
     <select id="getRandomComments" resultType="www.project.domain.CommentVO">
-        SELECT * FROM comment ORDER BY RAND() LIMIT #{limit}
+        SELECT * FROM comment WHERE spoiler = 0 ORDER BY RAND() LIMIT #{limit}
     </select>
+
 </mapper>
