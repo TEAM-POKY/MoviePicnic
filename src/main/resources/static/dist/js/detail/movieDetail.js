@@ -100,7 +100,7 @@ getCommentList(mediaInfo.mediaId).then(result => {
                     </div>
                     <div class="commentlikediv">
                     <div class="commentlikeCount">${comment.count}</div>
-                    <button type="button" class="commentLikeBtn" onclick="addlikeBtn(this)" id="commentLikeBtn" disabled="disabled"
+                    <button type="button" class="commentLikeBtn" onclick=${isLiked ? 'deleteLikeBtn(this)': 'addlikeBtn(this)'} id="commentLikeBtn" disabled="disabled"
                     style="background-color: ${isLiked ? 'red' : 'gray'}">좋아요</button>
                     </div>`;
             } else {
@@ -109,7 +109,7 @@ getCommentList(mediaInfo.mediaId).then(result => {
                 <div class="detailContent" id="detail">${comment.content}</div>
                 <div class="commnetlikediv">
                 <div class="commentlikeCount">${comment.count}</div>
-                <button type="button" class="commentLikeBtn" onclick="addlikeBtn(this)" id="commentLikeBtn"
+                <button type="button" class="commentLikeBtn" onclick=${isLiked ? 'deleteLikeBtn(this)': 'addlikeBtn(this)'} id="commentLikeBtn"
                 style="background-color: ${isLiked ? 'red' : 'gray'}">좋아요</button>
                 </div>`;
             }
@@ -165,8 +165,6 @@ document.addEventListener("click", (e) => {
 
     }
 })
-
-
 
 // 더보기/간략히 보기 버튼 처리
 document.querySelector('.detailStory').addEventListener('click', (event) => {
@@ -249,8 +247,28 @@ function toggleSpoiler(button) {
     spoilerElements.forEach(el => el.style.display = 'none');
 }
 
+//좋아요 삭제 버튼
+function deleteLikeBtn(button){
+    try{
+    var code = button.parentElement.parentElement.querySelector(".detailCommentCode").innerText;
+    const config = {
+        commentCode: code,
+        email: userInfo.email
+    }
+    deleteCommentLikeCount(config).then(result =>{
+        if(result == 1){
+            alert ("좋아요 삭제");
+            location.reload(true);
+        }
+    })
+    }catch (err){
+        console.log(err);
+    }
+}
+
 // 좋아요 버튼 기능
 function addlikeBtn(button) {
+    try{
     var code = button.parentElement.parentElement.querySelector(".detailCommentCode").innerText;
     console.log(code);
     const config = {
@@ -265,6 +283,9 @@ function addlikeBtn(button) {
         }
     })
     console.log(config);
+    }catch (err){
+        console.log(err);
+    }
 }
 
 async function islikeBtn(user){
@@ -273,6 +294,24 @@ async function islikeBtn(user){
         const result = await resp.json();
         return result;
     }catch (err){
+        console.log(err);
+    }
+}
+
+async function deleteCommentLikeCount(code){
+    try{
+        const url = "/movie/deleteCommentLike";
+        const config = {
+            method : "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(code)
+        }
+        const resp = await fetch(url,config);
+        const result = await resp.text();
+        return result
+    }catch(err){
         console.log(err);
     }
 }

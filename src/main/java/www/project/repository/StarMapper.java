@@ -37,4 +37,8 @@ public interface StarMapper {
     int updateCommentCount(CommentVO cvo);
 
     List<CommentVO> getCode(String email);
+
+    int deleteCommentLike(CommentVO commentVO);
+
+    boolean islike(CommentVO cvo);
 }
