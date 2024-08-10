@@ -60,6 +60,18 @@
         select comment_code from comment_like where email=#{email}
     </select>
 
+    <delete id="deleteCommentLike">
+        delete from comment_like where comment_code = #{commentCode} and email = #{email}
+    </delete>
+
+    <select id="islike" resultType="boolean">
+    SELECT EXISTS (
+    SELECT 1
+    FROM comment_like
+    WHERE comment_code = #{commentCode}
+    AND email = #{email}
+    )
+    </select>
 
 
 </mapper>

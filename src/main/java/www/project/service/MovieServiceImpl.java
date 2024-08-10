@@ -64,16 +64,38 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public int updateLike(CommentVO cvo) {
-        int isOk = starMapper.insertLike(cvo);
-        log.info("isOk >> {}",isOk);
-        if(isOk==1){
-          starMapper.updateCommentCount(cvo);
+        if (starMapper.islike(cvo)) {
+            return 1;
+        }
+        int insertResult = starMapper.insertLike(cvo);
+        log.info("insertResult >> {}",insertResult);
+        if (insertResult == 1) {
+            int updateResult = starMapper.updateCommentCount(cvo);
+            log.info("updateResult >> {}",updateResult);
+            if (updateResult > 1) {
+                return 1;
             }
-        return isOk;
+        }
+        return 1;
     }
+
+
 
     @Override
     public List<CommentVO> getCode(String email) {
         return starMapper.getCode(email);
+    }
+
+    @Override
+    public int deleteCommentLike(CommentVO commentVO) {
+        int isOk = starMapper.deleteCommentLike(commentVO);
+        log.info("isOk >> {}",isOk);
+        if(isOk==1) {
+            int isUp = starMapper.updateCommentCount(commentVO);
+            if (isUp > 1) {
+                return 1;
+            }
+        }
+        return 0;
     }
 }
