@@ -23,4 +23,6 @@ public interface MovieService {
     int updateLike(CommentVO cvo);
 
     List<CommentVO> getCode(String email);
+
+    int deleteCommentLike(CommentVO commentVO);
 }

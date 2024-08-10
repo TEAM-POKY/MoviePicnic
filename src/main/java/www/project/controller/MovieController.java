@@ -40,6 +40,13 @@ public class MovieController {
     }
 
     @ResponseBody
+    @DeleteMapping("/deleteCommentLike")
+    public int deleteCommentLike(@RequestBody CommentVO commentVO){
+        int isOk = movieService.deleteCommentLike(commentVO);
+        return isOk;
+    }
+
+    @ResponseBody
     @PostMapping("/ratingMovie")
     public int rating(@RequestBody StarVO svo){
         int isOk = movieService.ratingMovie(svo);
@@ -56,8 +63,8 @@ public class MovieController {
     @ResponseBody
     @PostMapping("/addCommentLike")
     public int addCommentLike(@RequestBody CommentVO cvo){
-//        log.info("cvo이메일 >>{}",cvo.getEmail());
-//        log.info("cvo코드 >>{}",cvo.getCommentCode());
+        log.info("cvo이메일 >>{}",cvo.getEmail());
+        log.info("cvo코드 >>{}",cvo.getCommentCode());
         int isOk = movieService.updateLike(cvo);
         return  isOk;
     }
