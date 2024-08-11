@@ -1,7 +1,6 @@
 package www.project.repository;
 
 import org.apache.ibatis.annotations.Mapper;
-
 import www.project.domain.CommentListDTO;
 import www.project.domain.CommentVO;
 import www.project.domain.StarVO;
@@ -41,4 +40,6 @@ public interface StarMapper {
     int deleteCommentLike(CommentVO commentVO);
 
     boolean islike(CommentVO cvo);
+
+    int deleteRating(StarVO svo);
 }

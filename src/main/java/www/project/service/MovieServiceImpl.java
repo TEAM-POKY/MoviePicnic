@@ -98,4 +98,9 @@ public class MovieServiceImpl implements MovieService {
         }
         return 0;
     }
+
+    @Override
+    public int deleteRating(StarVO svo) {
+        return starMapper.deleteRating(svo);
+    }
 }

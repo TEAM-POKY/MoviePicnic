@@ -225,6 +225,10 @@
     cursor: default;
 }
 
+.cancelRating:hover ~ .cancelText{
+    display: block;
+}
+
 .detail3{
     width: 1300px;
     height: 400px;
