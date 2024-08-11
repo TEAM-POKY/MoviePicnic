@@ -117,6 +117,7 @@ rateWrap.forEach(wrap => {
                         if (value <= rate) {
                             input.nextElementSibling.classList.add('filled');
                         }
+
                     });
                 }
             });
