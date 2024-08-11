@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import www.project.domain.CommentListDTO;
 import www.project.domain.CommentVO;
 import www.project.domain.StarVO;
+import www.project.domain.WishVO;
 import www.project.service.MovieService;
+import www.project.service.wishService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class MovieController {
 
     private final MovieService movieService;
+    private final wishService wsv;
 
     //디테일 매핑
     @GetMapping("/detail")
@@ -105,5 +108,10 @@ public class MovieController {
     @GetMapping("/searchResult")
     public void searchResultPage(){
 
+    }
+    @GetMapping("/heartCount/")
+    @ResponseBody
+    public int getHeartCount(@RequestParam String mediaType, @RequestParam long mediaId) {
+        return wsv.getHeartCount(mediaType,mediaId);
     }
 }
