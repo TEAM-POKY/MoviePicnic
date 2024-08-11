@@ -425,18 +425,47 @@ async function addWish(currentId, mediaInfo) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (typeof currentId !== 'undefined') {
-        try {
-            getWishInfo().then(result => {
-                if (result == "true") {
-                    isWish = true;
-                    document.getElementById('detailWish').innerText = "좋아요취소"
-                } else {
-                    document.getElementById('detailWish').innerText = "좋아요"
-                }
-            })
-        } catch (error) {
-            console.log(error);
+    getHeartCount().then(countResult => {
+        const detailWish = document.getElementById('detailWish');
+        const count = document.createElement('span');
+        if (typeof currentId !== 'undefined') {
+            try {
+                getWishInfo().then(result => {
+                    detailWish.innerHTML = '';
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    if (result === "true") {
+                        isWish = true;
+                        button.innerText = '좋아요취소';
+                    } else {
+                        button.innerText = '좋아요';
+                    }
+                    detailWish.appendChild(button);
+                    count.innerText ="좋아요갯수 : "+ countResult;
+                    detailWish.appendChild(count);
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        }else{
+            count.innerText = "좋아요갯수 : "+ countResult;
+            detailWish.appendChild(count);
         }
-    }
+    });
 });
+
+async function getHeartCount() {
+    try {
+        const url = `/movie/heartCount/?mediaType=${encodeURIComponent(mediaInfo.type)}&mediaId=${encodeURIComponent(mediaInfo.mediaId)}`;
+        const config = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        };
+        const resp = await fetch(url, config);
+        return await resp.text();
+    } catch (error) {
+        console.log(error);
+    }
+}
