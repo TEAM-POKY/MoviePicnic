@@ -32,6 +32,11 @@ public class wishServiceImpl implements wishService{
     }
 
     @Override
+    public int getHeartCount(String mediaType, long mediaId) {
+        return wishMapper.getHeartCount(mediaType,mediaId);
+    }
+
+    @Override
     public boolean checkWish(String currentId, long mediaId) {
         return wishMapper.checkWish(currentId, mediaId);
     }
