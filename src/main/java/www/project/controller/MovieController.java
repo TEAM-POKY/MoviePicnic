@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import www.project.domain.CommentListDTO;
 import www.project.domain.CommentVO;
 import www.project.domain.StarVO;
-import www.project.domain.WishVO;
 import www.project.service.MovieService;
 import www.project.service.wishService;
 
@@ -53,6 +52,13 @@ public class MovieController {
     @PostMapping("/ratingMovie")
     public int rating(@RequestBody StarVO svo){
         int isOk = movieService.ratingMovie(svo);
+        return isOk;
+    }
+
+    @ResponseBody
+    @DeleteMapping("/deleteRating")
+    public int deleteRating(@RequestBody StarVO svo){
+        int isOk = movieService.deleteRating(svo);
         return isOk;
     }
 

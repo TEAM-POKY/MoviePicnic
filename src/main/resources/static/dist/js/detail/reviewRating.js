@@ -13,28 +13,27 @@ var userInfo = {
 let rate = 0;
 
 israting(userInfo).then(result => {
-    try {
-        const rate = result.rate;
-        console.log(rate);
-        if (rate >= 0) {
-            console.log("if문 탐");
-            const inputs = document.querySelectorAll(".rating__input");
-            inputs.forEach(input => {
-                const value = parseFloat(input.getAttribute('value'));
-                if (value <= rate) {
-                    input.nextElementSibling.classList.add('filled');
-                }
-            });
-        }
-    } catch (err) {
-        // 메서드 자체 에러
-        // console.error(err);
-    }
-}).catch(err => {
-    // 비동기 에러
-    // console.error(err);
-});
+    rate = result.rate;
+    console.log(rate);
+    if (rate >= 0) {
+        console.log("if문 탐");
+        const inputs = document.querySelectorAll(".rating__input");
+        inputs.forEach(input => {
+            const value = parseFloat(input.getAttribute('value'));
+            if (value <= rate) {
+                input.nextElementSibling.classList.add('filled');
+            }
+            if(value == rate){
+                const span = document.createElement('span');
+                span.classList.add("cancelText");
+                span.innerText ='취소하기';
+                span.style.display = "none";
+                input.classList.add("cancelRating");
+            }
 
+        });
+    }
+});
 
 spoilerCheckbox.addEventListener('change', function () {
     if (spoilerCheckbox.checked) {
@@ -46,12 +45,24 @@ spoilerCheckbox.addEventListener('change', function () {
 
 // 이건 클릭하면 값 가지고 가는 용
 document.addEventListener('click', (e) => {
-    if (e.target.className === 'rating__input') {
-        const ratingInfo = {
-            email: user.innerText,
-            rate: e.target.value,
-            mediaId: userInfo.mediaId
-        }
+    console.log(e.target.className);
+    const ratingInfo = {
+        email: user.innerText,
+        rate: e.target.value,
+        mediaId: userInfo.mediaId
+    }
+    if(e.target.classList.contains('cancelRating')){
+            deleteRating(ratingInfo).then(result =>{
+                if(result == 1){
+                    console.log("별점 삭제 완료")
+                    initStars();
+                    location.reload(true);
+                }
+            })
+            return;
+    }
+    if (e.target.classList.contains('rating__input')) {
+
         ratingMovie(ratingInfo).then(result => {
             if (result == 1) {
                 alert("별점을 등록 하였습니다.");
@@ -104,20 +115,19 @@ rateWrap.forEach(wrap => {
             });
             starIcon.addEventListener('mouseout', () => {
                 starIcon.style.opacity = '1';
-                 checkedRate();
+                checkedRate();
             });
             wrap.addEventListener('mouseout', () => {
                 starIcon.style.opacity = '1';
                 initStars();
                 if (rate >= 0) {
-                    console.log("if문 탐");
                     const inputs = document.querySelectorAll(".rating__input");
                     inputs.forEach(input => {
                         const value = parseFloat(input.getAttribute('value'));
                         if (value <= rate) {
                             input.nextElementSibling.classList.add('filled');
-                        }
 
+                        }
                     });
                 }
             });
@@ -194,6 +204,24 @@ async function ratingMovie(ratingInfo) {
     }
 }
 
+async function deleteRating(ratingInfo){
+    try{
+        const url = "/movie/deleteRating";
+        const config = {
+            method : "Delete",
+            headers: {
+                'content-type': 'application/json; charset =utf-8'
+            },
+            body : JSON.stringify(ratingInfo)
+        }
+        const resp = await fetch(url,config);
+        const result = await resp.text();
+        return result;
+    }catch(err){
+        console.log(err);
+    }
+}
+
 // 별점 등록을 했는지
 async function israting(userInfo) {
     try {
@@ -209,7 +237,7 @@ async function israting(userInfo) {
         const result = await resp.json();
         return result;
     } catch (err) {
-        // console.log(err);
+        console.log(err);
     }
 }
 
