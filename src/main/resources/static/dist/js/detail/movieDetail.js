@@ -469,3 +469,11 @@ async function getHeartCount() {
         console.log(error);
     }
 }
+document.getElementById('detailCollection').addEventListener('click', () => {
+    const url = '/collection/list?currentId='+currentId+'&mediaId='+mediaInfo.mediaId;
+    let width='500';
+    let height='750';
+    let left=Math.ceil((window.screen.width-width)/2);
+    let top=Math.ceil((window.screen.height -height)/2);
+    window.open(url, '_blank', 'width='+width+',height='+height+',left='+left+',top='+top);
+});

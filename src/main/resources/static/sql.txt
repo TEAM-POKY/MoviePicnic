@@ -72,7 +72,7 @@ CREATE TABLE collection (
 CREATE TABLE collection_detail (
 	cno	int	NOT NULL,
 	media_type varchar(50) NOT NULL,
-	media_id varchar(200) NOT NULL
+	media_id bigint NOT NULL
 );
 
 -- Table: star
