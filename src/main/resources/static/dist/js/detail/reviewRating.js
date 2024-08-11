@@ -110,6 +110,7 @@ rateWrap.forEach(wrap => {
                 starIcon.style.opacity = '1';
                 initStars();
                 if (rate >= 0) {
+
                     console.log("if문 탐");
                     const inputs = document.querySelectorAll(".rating__input");
                     inputs.forEach(input => {
