@@ -25,4 +25,6 @@ public interface MovieService {
     List<CommentVO> getCode(String email);
 
     int deleteCommentLike(CommentVO commentVO);
+
+    int deleteRating(StarVO svo);
 }

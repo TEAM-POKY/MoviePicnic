@@ -12,6 +12,10 @@
         insert into star(email,rate,media_id,date) values(#{email},#{rate},#{mediaId},now())
     </insert>
 
+    <delete id="deleteRating">
+        delete from star where email = #{email} and media_Id = #{mediaId}
+    </delete>
+
     <select id="getAlreadyStar" resultType="www.project.domain.StarVO">
         select * from star where email=#{email} and media_id=#{mediaId}
     </select>
@@ -72,6 +76,8 @@
     AND email = #{email}
     )
     </select>
+
+
 
 
 </mapper>
