@@ -12,4 +12,6 @@ public interface wishService {
     int deleteWish(WishVO wvo);
 
     List<WishVO> getList(String myEmail);
+
+    int getHeartCount(String mediaType, long mediaId);
 }

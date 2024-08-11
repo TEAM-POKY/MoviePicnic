@@ -18,4 +18,7 @@
     <select id="getList" resultType="www.project.domain.WishVO">
         select * from wish where email = #{myEmail}
     </select>
+    <select id="getHeartCount" resultType="int">
+        select count(*) from wish where media_type = #{mediaType} and media_id = #{mediaId}
+    </select>
 </mapper>
