@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <link rel="stylesheet" th:href="@{/dist/css/trendingPeople.css}">
+<link rel="stylesheet" th:href="@{/dist/css/topRatingMovies.css}">
 <th:block th:replace="~{header :: setFragment(~{this::content})}">
     <th:block th:fragment="content">
 <head>
@@ -156,13 +157,11 @@
             cursor: pointer;
             font-size: 20px;
         }
-
         .innerContainer {
             display: flex;
             transition: transform 1s;
             margin: 0 auto;
         }
-
         .mainposter{
             width: 60px;
             height: 90px;
@@ -192,6 +191,13 @@
         <p class="trendingPeopleTitle">화제의 인물</p>
         <div class="trendingPeopleContainer"></div>
     </div>
+    <div class="movieOutBox2" id="movieContainer2">
+        <p class="movieInBoxTitle">평가가 좋은 작품1</p>
+        <div class="innerContainer2"></div>
+        <button type="button" class="btn" id="rightBtn2"> > </button>
+        <button type="button" class="btn" id="leftBtn2"> < </button>
+    </div>
+
     </div>
 
 
@@ -199,6 +205,7 @@
 <script th:src="@{/dist/js/nowPlayingSlide.js}"></script>
 <script th:src="@{/dist/js/randomComment.js}"></script>
 <script th:src="@{/dist/js/trendingPeople.js}"></script>
+<script th:src="@{/dist/js/topRatingSlide.js}"></script>
 <script>
 
 </script>
