@@ -105,6 +105,7 @@ rateWrap.forEach(wrap => {
         stars = wrap.querySelectorAll('.star-icon');
         stars.forEach((starIcon, idx) => {
             starIcon.addEventListener('mouseover', () => {
+                console.log("test")
                 initStars();
                 filledRate(idx, labelLength);
                 for (let i = 0; i < stars.length; i++) {
