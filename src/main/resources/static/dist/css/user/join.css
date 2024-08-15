@@ -20,29 +20,17 @@
     margin: 0 auto;
 }
 input {
-    width: 650px;
+    width: 637px;
     height: 50px;
     margin: 15px auto;
     border: none;
     border-radius: 8px;
     background-color: gainsboro;
     outline: none;
-    padding:0 0 10px 10px;
+    padding: 5px 13px;
 }
 .JoinInputArea, .LoginInputArea{
     position: relative;
-}
-label {
-    position: absolute;
-    top: 35px;
-    left: 12px;
-    font-size: 16px;
-}
-.JoinArea input:focus ~ label,
-.LoginArea input:focus ~ label{
-    transform: translate(-5px, -15px);
-    font-size: small;
-    color: gray;
 }
 .JoinBtn, .LoginBtn{
     width: 660px;
