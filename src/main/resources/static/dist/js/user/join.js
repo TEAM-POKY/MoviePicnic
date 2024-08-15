@@ -16,19 +16,6 @@ let duplicatePw = false;
 let duplicatePwCheck = false;
 
 
-function changeValue(){
-    // for(let i=0; i<=4; i++){
-    //     if (InputC.item(i+1).value == '') {
-    //         labelC.item(i).style.cssText = 'position:absolute; top:35px; left:12px; font-size:16px';
-    //         const Joinspan = document.getElementById('JoinSpan'+i);
-    //         Joinspan.innerHTML='';
-    //         document.querySelector('.sendEmailBtn').disabled=true;
-    //     } else {
-    //         labelC.item(i).style.cssText = 'font-size:small; color:gray; transform:translate(-5px, -15px);';
-    //     }
-    // }
-}
-
 function emailValid(str){
     return emailRegExp.test(str);
 }
@@ -85,7 +72,6 @@ pw.onkeyup = function (){
     }
     if(pw.onchange){
         if(!pwCheck.value==''){
-            console.log("비밀번호 바꾸는중")
             reCheckPw()
         }
     }
@@ -108,21 +94,12 @@ pwCheck.addEventListener('keyup',()=>{
 })
 
 joinBtn.addEventListener('click',()=>{
-    console.log(email.value)
-    console.log(nick.value)
-    console.log(pw.value)
-    console.log(pwCheck.value)
     const formValid = duplicateEmail && duplicateNick && duplicatePw && duplicatePwCheck;
     console.log(formValid);
     if(formValid && (!email.value==''&&!nick.value==''&&!pw.value==''&&!pwCheck.value=='')){
         console.log("활성화")
         document.querySelector('.JoinBtn').type = 'submit';
     } else {
-        console.log("비활성화")
-        console.log(email.value)
-        console.log(nick.value)
-        console.log(pw.value)
-        console.log(pwCheck.value)
         if(email.value==''||nick.value==''||pw.value==''||pwCheck.value==''){
             alert("입력란을 모두 채워주세요.");
         }else if(!duplicateEmail){
