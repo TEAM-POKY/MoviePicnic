@@ -7,7 +7,6 @@ const options = {
     }
 };
 let nickName = '';
-//new branch test
 
 //유저정보
 async function getUserInfo(currentId) {
