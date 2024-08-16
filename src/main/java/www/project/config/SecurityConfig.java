@@ -1,7 +1,6 @@
 package www.project.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,8 +10,9 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import www.project.config.oauth2.OAuth2AuthenticationSuccessHandler;
 import www.project.config.oauth2.PrincipalOauth2UserService;
+import www.project.config.security.CustomAuthenticationFailureHandler;
+import www.project.config.security.CustomAuthenticationSuccessHandler;
 import www.project.config.security.CustomUserService;
 
 @Configuration
@@ -23,6 +23,7 @@ public class SecurityConfig {
     private final AuthenticationSuccessHandler OAuth2AuthenticationSuccessHandler;
     private final PrincipalOauth2UserService PrincipalOauth2UserService;
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Bean
     PasswordEncoder passwordEncoder(){return PasswordEncoderFactories.createDelegatingPasswordEncoder();}
@@ -40,14 +41,14 @@ public class SecurityConfig {
                         .passwordParameter("pw")
                         .loginProcessingUrl("/user/login")
                         .successHandler(customAuthenticationSuccessHandler)
-                        .failureUrl("/user/login?false")
+                        .failureHandler(customAuthenticationFailureHandler)
                         .permitAll()
                 )
                 .oauth2Login(oauth2->oauth2
                         .loginPage("/user/login")
+                        .successHandler(OAuth2AuthenticationSuccessHandler)
                         .userInfoEndpoint(userInfo->userInfo
                                 .userService(PrincipalOauth2UserService))
-                        .successHandler(OAuth2AuthenticationSuccessHandler)
                 )
                 .logout(logout -> logout
                         .logoutUrl("/user/logout")
