@@ -16,7 +16,6 @@ israting(userInfo).then(result => {
     rate = result.rate;
     console.log(rate);
     if (rate >= 0) {
-        console.log("if문 탐");
         const inputs = document.querySelectorAll(".rating__input");
         inputs.forEach(input => {
             const value = parseFloat(input.getAttribute('value'));
