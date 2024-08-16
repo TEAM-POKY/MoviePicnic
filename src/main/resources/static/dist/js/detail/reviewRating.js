@@ -53,27 +53,34 @@ spoilerCheckbox.addEventListener('change', function () {
 
 // 이건 클릭하면 값 가지고 가는 용
 document.addEventListener('click', (e) => {
-    const ratingInfo = {
-        email: user.innerText,
-        rate: e.target.value,
-        mediaId: userInfo.mediaId
-    }
-    if (e.target.classList.contains('cancelRating')) {
-        deleteRating(ratingInfo).then(result => {
-            if (result == 1) {
-                alert("별점 삭제 완료")
-                location.reload(true);
-            }
-        })
-        return;
-    }
-    if (e.target.classList.contains('rating__input')) {
-        ratingMovie(ratingInfo).then(result => {
-            if (result == 1) {
-                alert("별점을 등록 하였습니다.");
-                location.reload(true);
-            }
-        })
+    if(user.innerText==='anonymousUser'){
+        if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")){
+            let currentUrl = encodeURI(window.location.href);
+            window.location.href = "/user/login?returnUrl="+currentUrl;
+        }
+    } else {
+        const ratingInfo = {
+            email: user.innerText,
+            rate: e.target.value,
+            mediaId: userInfo.mediaId
+        }
+        if(e.target.classList.contains('cancelRating')){
+                deleteRating(ratingInfo).then(result =>{
+                    if (result == 1) {
+                        alert("별점 삭제 완료")
+                        location.reload(true);
+                    }
+                })
+                return;
+        }
+        if (e.target.classList.contains('rating__input')) {
+            ratingMovie(ratingInfo).then(result => {
+                if (result == 1) {
+                    alert("별점을 등록 하였습니다.");
+                    location.reload(true);
+                }
+            })
+        }
     }
 });
 
@@ -157,10 +164,6 @@ rateWrap.forEach(wrap => {
         });
     });
 });
-
-
-
-
 
 function filledRate(index, length) {
     if (index <= length) {

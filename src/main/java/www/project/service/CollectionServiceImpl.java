@@ -2,8 +2,6 @@ package www.project.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.writer.CollectionMapper;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import www.project.domain.CollectionDTO;
 import www.project.repository.MyCollectionMapper;
@@ -25,5 +23,10 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public int newList(CollectionDTO collectionDTO) {
         return myCollectionMapper.newList(collectionDTO);
+    }
+
+    @Override
+    public int addContent(String collectionId, long mediaId) {
+        return myCollectionMapper.addList(collectionId,mediaId);
     }
 }

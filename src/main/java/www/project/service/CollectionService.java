@@ -9,4 +9,6 @@ public interface CollectionService {
     List<CollectionDTO> getList(String currentId);
 
     int newList(CollectionDTO collectionDTO);
+
+    int addContent(String collectionId, long mediaId);
 }
