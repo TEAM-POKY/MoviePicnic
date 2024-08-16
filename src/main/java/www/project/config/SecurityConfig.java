@@ -22,6 +22,7 @@ public class SecurityConfig {
 
     private final AuthenticationSuccessHandler OAuth2AuthenticationSuccessHandler;
     private final PrincipalOauth2UserService PrincipalOauth2UserService;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Bean
     PasswordEncoder passwordEncoder(){return PasswordEncoderFactories.createDelegatingPasswordEncoder();}
@@ -37,9 +38,9 @@ public class SecurityConfig {
                 .formLogin(login -> login
                         .usernameParameter("email")
                         .passwordParameter("pw")
-                        .loginPage("/user/login")
+                        .loginProcessingUrl("/user/login")
+                        .successHandler(customAuthenticationSuccessHandler)
                         .failureUrl("/user/login?false")
-                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .oauth2Login(oauth2->oauth2
