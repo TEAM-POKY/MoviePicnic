@@ -11,28 +11,34 @@ var userInfo = {
     mediaId: mediaInfo.mediaId
 };
 let rate = 0;
-
 israting(userInfo).then(result => {
     rate = result.rate;
     console.log(rate);
     if (rate >= 0) {
-        console.log("if문 탐");
         const inputs = document.querySelectorAll(".rating__input");
         inputs.forEach(input => {
             const value = parseFloat(input.getAttribute('value'));
             if (value <= rate) {
                 input.nextElementSibling.classList.add('filled');
             }
-            if(value == rate){
-                const span = document.createElement('span');
+            if (value == rate) {
+                const span = document.createElement('div');
                 span.classList.add("cancelText");
-                span.innerText ='취소하기';
-                span.style.display = "none";
-                input.classList.add("cancelRating");
+                // span.style.display = "none";
+                const spanText = document.createElement("span");
+                spanText.innerHTML = "취소하기";
+                spanText.classList.add("cancelTextSpan");
+                span.appendChild(spanText);
+                span.style.display = 'none';
+                input.nextElementSibling.classList.add("cancelRating");
+                input.nextElementSibling.classList.add('filled');
+                input.parentElement.after(span);
             }
 
         });
     }
+}).catch(err => {
+    console.log(err);
 });
 
 spoilerCheckbox.addEventListener('change', function () {
@@ -44,31 +50,31 @@ spoilerCheckbox.addEventListener('change', function () {
 });
 
 // 이건 클릭하면 값 가지고 가는 용
-document.addEventListener('click', (e) => {
-    console.log(e.target.className);
-    if(user.innerText==='anonymousUser'){
-        if(confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")){
-            let currentUrl = encodeURI(window.location.href);
-            window.location.href = "/user/login?returnUrl="+currentUrl;
-        }
-    } else {
+const labels = document.querySelectorAll(".rating__label");
+label.forEach(label => label.addEventListener('click', (e) => {
+        console.log(e.target.parentElement);
         const ratingInfo = {
             email: user.innerText,
             rate: e.target.value,
             mediaId: userInfo.mediaId
         }
-        if(e.target.classList.contains('cancelRating')){
-                deleteRating(ratingInfo).then(result =>{
-                    if(result == 1){
-                        console.log("별점 삭제 완료")
-                        initStars();
-                        location.reload(true);
-                    }
-                })
-                return;
+
+        if (ratingInfo.email == 'anonymousUser') {
+            if (confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
+                let currentUrl = encodeURI(window.location.href);
+                window.location.href = "/user/login?returnUrl=" + currentUrl;
+            }
+        }
+        if (e.target.classList.contains('cancelRating')) {
+            deleteRating(ratingInfo).then(result => {
+                if (result == 1) {
+                    alert("별점 삭제 완료")
+                    location.reload(true);
+                }
+            })
+            return;
         }
         if (e.target.classList.contains('rating__input')) {
-
             ratingMovie(ratingInfo).then(result => {
                 if (result == 1) {
                     alert("별점을 등록 하였습니다.");
@@ -76,12 +82,33 @@ document.addEventListener('click', (e) => {
                 }
             })
         }
+    })
+)
+
+document.querySelector(".rating").addEventListener('mouseover', (e) => {
+    var span = e.target.parentElement.nextElementSibling;
+    try {
+        if (span.className == "cancelText") {
+            span.style.display = "inline-block";
+        }
+    } catch (err) {
     }
+
+});
+
+document.querySelector(".rating").addEventListener('mouseout', (e) => {
+    var span = e.target.parentElement.nextElementSibling;
+    try {
+        if (span.className == "cancelText") {
+            span.style.display = "none";
+        }
+    } catch (err) {
+    }
+
 });
 
 comment.addEventListener('click', () => {
     israting(userInfo).then(result => {
-        console.log(result);
         if (result == null) {
             alert("별점 등록 후 리뷰 등록이 가능합니다.");
             document.getElementById("commentText").value = "";
@@ -104,7 +131,6 @@ comment.addEventListener('click', () => {
 
 });
 
-
 let stars = document.querySelectorAll('.rating .star-icon');
 
 rateWrap.forEach(wrap => {
@@ -112,7 +138,6 @@ rateWrap.forEach(wrap => {
         stars = wrap.querySelectorAll('.star-icon');
         stars.forEach((starIcon, idx) => {
             starIcon.addEventListener('mouseover', () => {
-                console.log("test")
                 initStars();
                 filledRate(idx, labelLength);
                 for (let i = 0; i < stars.length; i++) {
@@ -134,7 +159,6 @@ rateWrap.forEach(wrap => {
                         const value = parseFloat(input.getAttribute('value'));
                         if (value <= rate) {
                             input.nextElementSibling.classList.add('filled');
-
                         }
                     });
                 }
@@ -153,10 +177,8 @@ function filledRate(index, length) {
 
 function checkedRate() {
     let checkedRadio = document.querySelectorAll('.rating input[type="radio"]:checked');
-    // initStars();
     checkedRadio.forEach(radio => {
         let previousSiblings = prevAll(radio);
-
         for (let i = 0; i < previousSiblings.length; i++) {
             previousSiblings[i].querySelector('.star-icon').classList.add('filled');
         }
@@ -212,20 +234,20 @@ async function ratingMovie(ratingInfo) {
     }
 }
 
-async function deleteRating(ratingInfo){
-    try{
+async function deleteRating(ratingInfo) {
+    try {
         const url = "/movie/deleteRating";
         const config = {
-            method : "Delete",
+            method: "Delete",
             headers: {
                 'content-type': 'application/json; charset =utf-8'
             },
-            body : JSON.stringify(ratingInfo)
+            body: JSON.stringify(ratingInfo)
         }
-        const resp = await fetch(url,config);
+        const resp = await fetch(url, config);
         const result = await resp.text();
         return result;
-    }catch(err){
+    } catch (err) {
         console.log(err);
     }
 }
