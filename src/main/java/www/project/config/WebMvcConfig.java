@@ -7,12 +7,24 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    String uploadPath = "file:///C:\\image\\";
+    public String uploadPath() {
+        String os = System.getProperty("os.name").toLowerCase();
+        String homeDir = System.getProperty("user.home");
+        String UP_DIR = "";
+
+        if(os.contains("win")) {
+            UP_DIR = homeDir + "\\image\\";
+        } else {
+            UP_DIR = homeDir + "/image/";
+        }
+
+        return "file:" + UP_DIR;
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("/upload/**")
-                .addResourceLocations(uploadPath);
+                .addResourceLocations(uploadPath());
     }
 }
