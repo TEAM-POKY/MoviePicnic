@@ -11,4 +11,6 @@ public interface MyCollectionMapper {
     List<CollectionDTO> getList(String currentId);
 
     int newList(CollectionDTO collectionDTO);
+
+    int addList(String collectionId, long mediaId);
 }

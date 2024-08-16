@@ -437,7 +437,7 @@ function showModal(posters) {
         posterImg.dataset.mediaId = poster.mediaId;
         modalContent.appendChild(posterImg);
         posterImg.addEventListener('click', () => {
-            window.location.href = `https://www.themoviedb.org/movie/${poster.mediaId}`;
+            window.location.href = `/movie/detail?movieId=${poster.mediaId}`;
         });
     });
 

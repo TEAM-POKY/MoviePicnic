@@ -26,6 +26,7 @@ public class CollectionController {
         List<CollectionDTO> myList = csv.getList(currentId);
         UserVO uvo = usv.getInfo(currentId);
         String nickName = uvo.getNickname();
+
         model.addAttribute("nickName", nickName);
         model.addAttribute("myList", myList);
     }
@@ -36,5 +37,15 @@ public class CollectionController {
             return "redirect:/collection/list";
         }
         return "fail";
+    }
+    @PostMapping("/{collectionId}/media/{mediaId}")
+    @ResponseBody
+    public String addMediaToCollectionList(@PathVariable String collectionId, @PathVariable long mediaId) {
+        log.info("collectionId={}, mediaId={}", collectionId, mediaId);
+        int isAdd = csv.addContent(collectionId, mediaId);
+        if(isAdd > 0){
+            return "true";
+        }
+        return "false";
     }
 }
