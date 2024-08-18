@@ -22,7 +22,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         UserVO user = principalDetails.getUser();
 
-        // 쿠키에서 returnUrl을 먼저 확인
         Cookie[] cookies = request.getCookies();
         String returnUrl = null;
         if (cookies != null) {
@@ -36,7 +35,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             }
         }
 
-        // returnUrl이 있으면 해당 URL로 리다이렉트
         if (returnUrl != null && !returnUrl.isEmpty()) {
             getRedirectStrategy().sendRedirect(request, response, returnUrl);
             return;
