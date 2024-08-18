@@ -58,11 +58,12 @@ label.forEach(label => label.addEventListener('click', (e) => {
             rate: e.target.value,
             mediaId: userInfo.mediaId
         }
-
         if (ratingInfo.email == 'anonymousUser') {
             if (confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
                 let currentUrl = encodeURI(window.location.href);
                 window.location.href = "/user/login?returnUrl=" + currentUrl;
+                setCookie("url",currentUrl);
+                return;
             }
         }
         if (e.target.classList.contains('cancelRating')) {
@@ -84,6 +85,7 @@ label.forEach(label => label.addEventListener('click', (e) => {
         }
     })
 )
+
 
 document.querySelector(".rating").addEventListener('mouseover', (e) => {
     var span = e.target.parentElement.nextElementSibling;

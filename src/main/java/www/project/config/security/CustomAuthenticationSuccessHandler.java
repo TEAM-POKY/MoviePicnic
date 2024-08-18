@@ -1,4 +1,4 @@
-package www.project.config;
+package www.project.config.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
