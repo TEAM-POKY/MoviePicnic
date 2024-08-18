@@ -14,38 +14,41 @@ import java.io.IOException;
 
 @Component
 @Slf4j
-public class OAuth2AuthenticationSuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
+public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         UserVO user = principalDetails.getUser();
-        //카카오톡, 네이버 닉네임 변경 요청
-        if (user.getNickname().contains("_user")) {
-            response.sendRedirect("/?message=notAllowedNickName");
-        } else {
-            response.sendRedirect("/");
-        }
 
+        // 쿠키에서 returnUrl을 먼저 확인
         Cookie[] cookies = request.getCookies();
         String returnUrl = null;
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 log.info("cookie getName : " + cookie.getName());
                 if (cookie.getName().equals("url")) {
-                    returnUrl=cookie.getValue().split("@")[0];
-                    log.info("return Url : {}",returnUrl);
+                    returnUrl = cookie.getValue().split("@")[0];
+                    log.info("return Url : {}", returnUrl);
                     break;
                 }
             }
         }
-        if(returnUrl!=null && !returnUrl.isEmpty()){
-            getRedirectStrategy().sendRedirect(request,response,returnUrl);
+
+        // returnUrl이 있으면 해당 URL로 리다이렉트
+        if (returnUrl != null && !returnUrl.isEmpty()) {
+            getRedirectStrategy().sendRedirect(request, response, returnUrl);
             return;
         }
 
-
-        super.onAuthenticationSuccess(request,response,authentication);
+        // 닉네임 체크 후 리다이렉트
+        if (user.getNickname().contains("_user")) {
+            response.sendRedirect("/?message=notAllowedNickName");
+        } else {
+            response.sendRedirect("/");
+        }
+        // 리다이렉트 수행되었으므로 super 호출 안함
     }
 }
+
