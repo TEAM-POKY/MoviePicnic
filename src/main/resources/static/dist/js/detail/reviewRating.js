@@ -51,7 +51,8 @@ spoilerCheckbox.addEventListener('change', function () {
 
 // 이건 클릭하면 값 가지고 가는 용
 const labels = document.querySelectorAll(".rating__label");
-label.forEach(label => label.addEventListener('click', (e) => {
+document.getElementById('ratingWrapDiv').addEventListener('click',()=>{
+    label.forEach(label => label.addEventListener('click', (e) => {
         console.log(e.target.parentElement);
         const ratingInfo = {
             email: user.innerText,
@@ -63,19 +64,15 @@ label.forEach(label => label.addEventListener('click', (e) => {
                 let currentUrl = encodeURI(window.location.href);
                 window.location.href = "/user/login?returnUrl=" + currentUrl;
                 setCookie("url",currentUrl);
-                return;
             }
-        }
-        if (e.target.classList.contains('cancelRating')) {
+        } else if (e.target.classList.contains('cancelRating')) {
             deleteRating(ratingInfo).then(result => {
                 if (result == 1) {
                     alert("별점 삭제 완료")
                     location.reload(true);
                 }
             })
-            return;
-        }
-        if (e.target.classList.contains('rating__input')) {
+        } else if (e.target.classList.contains('rating__input')) {
             ratingMovie(ratingInfo).then(result => {
                 if (result == 1) {
                     alert("별점을 등록 하였습니다.");
@@ -85,6 +82,7 @@ label.forEach(label => label.addEventListener('click', (e) => {
         }
     })
 )
+})
 
 
 document.querySelector(".rating").addEventListener('mouseover', (e) => {
@@ -110,6 +108,7 @@ document.querySelector(".rating").addEventListener('mouseout', (e) => {
 });
 
 comment.addEventListener('click', () => {
+
     israting(userInfo).then(result => {
         if (result == null) {
             alert("별점 등록 후 리뷰 등록이 가능합니다.");
