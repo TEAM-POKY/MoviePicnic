@@ -9,4 +9,7 @@
     <insert id="newList">
         insert into collection(collection_name,email) values (#{collectionName}, #{email})
     </insert>
+    <insert id="addList">
+        insert into collection_detail(cno, media_type, media_id) values(#{collectionId}, 'movie', #{mediaId})
+    </insert>
 </mapper>
