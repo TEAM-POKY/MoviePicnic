@@ -61,8 +61,8 @@ document.getElementById('ratingWrapDiv').addEventListener('click',()=>{
         }
         if (ratingInfo.email == 'anonymousUser') {
             if (confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
+                window.location.href = "/user/login";
                 let currentUrl = encodeURI(window.location.href);
-                window.location.href = "/user/login?returnUrl=" + currentUrl;
                 setCookie("url",currentUrl);
             }
         } else if (e.target.classList.contains('cancelRating')) {
@@ -107,11 +107,12 @@ document.querySelector(".rating").addEventListener('mouseout', (e) => {
 
 });
 
+//로그인 전 코멘트달기 방지
 document.getElementById('commentText').addEventListener('click',()=>{
     if (user.innerText == 'anonymousUser') {
         if (confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
             let currentUrl = encodeURI(window.location.href);
-            window.location.href = "/user/login?returnUrl=" + currentUrl;
+            window.location.href = "/user/login";
             setCookie("url",currentUrl);
         }
     }
