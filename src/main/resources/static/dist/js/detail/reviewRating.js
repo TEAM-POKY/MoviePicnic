@@ -107,29 +107,37 @@ document.querySelector(".rating").addEventListener('mouseout', (e) => {
 
 });
 
-comment.addEventListener('click', () => {
-
-    israting(userInfo).then(result => {
-        if (result == null) {
-            alert("별점 등록 후 리뷰 등록이 가능합니다.");
-            document.getElementById("commentText").value = "";
-        } else {
-            const config = {
-                mediaId: userInfo.mediaId,
-                content: document.getElementById("commentText").value,
-                spoiler: spoilerCheckbox.value,
-                email: user.innerText
-            };
-            commentMovie(config).then(result => {
-                console.log(result);
-                if (result == 1) {
-                    alert("댓글을 등록하였습니다.");
-                    location.reload(true);
-                }
-            })
+document.getElementById('commentText').addEventListener('click',()=>{
+    if (user.innerText == 'anonymousUser') {
+        if (confirm("로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?")) {
+            let currentUrl = encodeURI(window.location.href);
+            window.location.href = "/user/login?returnUrl=" + currentUrl;
+            setCookie("url",currentUrl);
         }
-    })
+    }
+})
 
+comment.addEventListener('click', () => {
+     israting(userInfo).then(result => {
+            if (result == null) {
+                alert("별점 등록 후 리뷰 등록이 가능합니다.");
+                document.getElementById("commentText").value = "";
+            } else {
+                const config = {
+                    mediaId: userInfo.mediaId,
+                    content: document.getElementById("commentText").value,
+                    spoiler: spoilerCheckbox.value,
+                    email: user.innerText
+                };
+                commentMovie(config).then(result => {
+                    console.log(result);
+                    if (result == 1) {
+                        alert("댓글을 등록하였습니다.");
+                        location.reload(true);
+                    }
+                })
+            }
+    })
 });
 
 let stars = document.querySelectorAll('.rating .star-icon');
