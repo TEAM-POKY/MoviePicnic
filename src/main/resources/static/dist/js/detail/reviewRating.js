@@ -30,7 +30,7 @@ israting(userInfo).then(result => {
                 spanText.classList.add("cancelTextSpan");
                 span.appendChild(spanText);
                 span.style.display = 'none';
-                input.nextElementSibling.classList.add("cancelRating");
+                input.classList.add("cancelRating");
                 input.nextElementSibling.classList.add('filled');
                 input.parentElement.after(span);
             }
@@ -68,7 +68,7 @@ document.getElementById('ratingWrapDiv').addEventListener('click',()=>{
         } else if (e.target.classList.contains('cancelRating')) {
             deleteRating(ratingInfo).then(result => {
                 if (result == 1) {
-                    alert("별점 삭제 완료")
+                    alert("별점을 삭제 하였습니다.")
                     location.reload(true);
                 }
             })
