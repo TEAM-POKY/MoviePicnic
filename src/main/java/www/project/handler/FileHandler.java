@@ -28,9 +28,9 @@ public class FileHandler {
         if(os.contains("win")){
             UP_DIR = "C:\\image\\";
         } else if(os.contains("mac")){
-            UP_DIR = "/Users/Shared/image/";
+            UP_DIR = System.getProperty("user.home")+"/Pictures/";
         } else if(os.contains("nix") || os.contains("nux") || os.contains("aix")){
-            UP_DIR = "/var/Shared/image/";
+            UP_DIR = System.getProperty("user.home")+"/image/";
         }
         return UP_DIR;
     }

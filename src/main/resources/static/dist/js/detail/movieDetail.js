@@ -4,6 +4,8 @@ const mainposter = document.querySelector(".mainposter");
 const voteDiv = document.querySelector(".detailVote");
 const detailTitlediv = document.querySelector(".detailTitle");
 const detailCatediv = document.querySelector(".detailcate");
+const detailRelease = document.querySelector(".detailReleaseDate");
+const detailRunTime = document.querySelector(".detailRuntime");
 const storyText = document.querySelector(".detailText");
 const imageBaseUrl = 'https://image.tmdb.org/t/p/original';
 const imageBasicurl = '/dist/image/no_image.png';
@@ -30,14 +32,29 @@ console.log(mediaInfo);
 console.log(urlParams.has("movieId"));
 
 getDetail(mediaInfo).then(result => {
-    console.log(result);
+    console.log(result.release_date);
+    console.log(result.runtime);
+    console.log(typeof (result.overview));
+    console.log(changesecondToTime(result.runtime));
     const posterPath = result.poster_path != null ? `${imageBaseUrl}${result.poster_path}` : `${imageBasicurl}`;
     const backdropPath = result.backdrop_path != null ? `${imageBaseUrl}${result.backdrop_path}` : '';
     const backdropsrc = backdropPath;
     const mainpostersrc = posterPath;
     const voteNum = `⭐${result.vote_average} (${result.vote_count})`;
+    const releaseTime = result.release_date != null ? result.release_date.replaceAll("-",".") : '';
+    const runTime =result.runtime != null ? changesecondToTime(result.runtime) : '';
     const detailTitle = mediaInfo.type == "tv" ? result.name : result.title;
-    let overView = result.overview.length <= 0 ? document.querySelector(".detailStoryLi").style.display = "none" : result.overview;
+    let overView = " "
+    if(result.overview.length == 0){
+        overView = "줄거리가 제공되지 않습니다.";
+        document.querySelector(".more-text").style.display="none";
+        document.querySelector(".less-text").style.display="none";
+    }else{
+        overView = result.overview;
+        document.querySelector(".less-text").style.display="none";
+        document.querySelector(".detailText").style.overflow="hidden";
+    }
+
 
     // 카테고리 목록 생성
     const cateul = document.createElement('ul');
@@ -57,7 +74,11 @@ getDetail(mediaInfo).then(result => {
     mainposter.src = mainpostersrc ? mainpostersrc : '기본 포스터 URL';
     voteDiv.innerText = voteNum;
     detailTitlediv.innerText = detailTitle;
+    detailRelease.innerText = releaseTime;
+    detailRunTime.innerText = runTime;
     storyText.innerText = overView;
+
+
 }).catch(err => {
     console.error('Error fetching movie details:', err);
 });
@@ -169,14 +190,15 @@ document.addEventListener("click", (e) => {
 // 더보기/간략히 보기 버튼 처리
 document.querySelector('.detailStory').addEventListener('click', (event) => {
     const target = event.target;
-
     if (target.classList.contains('more-text')) {
         target.style.display = 'none';
         document.querySelector('.less-text').style.display = 'inline-block';
+        document.querySelector(".detailText").style.removeProperty("overflow");
         storyText.style.display = 'inline-block';
     } else if (target.classList.contains('less-text')) {
         target.style.display = 'none';
         document.querySelector('.more-text').style.display = 'inline-block';
+        document.querySelector(".detailText").style.overflow ="hidden";
         storyText.style.display = '-webkit-box';
     }
 });
@@ -477,3 +499,10 @@ document.getElementById('detailCollection').addEventListener('click', () => {
     let top=Math.ceil((window.screen.height -height)/2);
     window.open(url, '_blank', 'width='+width+',height='+height+',left='+left+',top='+top);
 });
+
+function changesecondToTime(time){
+    const totalTime = time;
+    const hour = parseInt(totalTime/60);
+    const min = totalTime % 60;
+    return hour + '시간 '+min + '분';
+}

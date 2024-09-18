@@ -1,4 +1,4 @@
-package www.project.config.oauth2;
+package www.project.config.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -8,19 +8,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import www.project.domain.UserVO;
 
 import java.io.IOException;
 
 @Component
 @Slf4j
-public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        UserVO user = principalDetails.getUser();
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         Cookie[] cookies = request.getCookies();
         String returnUrl = null;
@@ -40,13 +36,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             return;
         }
 
-        // 닉네임 체크 후 리다이렉트
-        if (user.getNickname().contains("_user")) {
-            response.sendRedirect("/?message=notAllowedNickName");
-        } else {
-            response.sendRedirect("/");
-        }
-        // 리다이렉트 수행되었으므로 super 호출 안함
+        super.onAuthenticationSuccess(request, response, authentication);
     }
 }
-

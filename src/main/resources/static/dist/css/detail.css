@@ -1,29 +1,33 @@
-.wrap{
+/* 레이아웃 스타일 */
+.wrap {
     width: 100%;
     height: 100vh;
     color: white;
-
 }
 
-.detailWrap{
+.detailWrap {
+    display: flex;
     flex-direction: column;
-    width: 1300px;
+    width: 90%;
+    max-width: 1300px;
     height: 100vh;
+    margin: 30px auto;
     background-color: white;
-    margin: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .detail1 {
     width: 100%;
     height: 70%;
-    margin: auto;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-position-y: 60%;
 }
 
-.detail1Wrap{
+.detail1Wrap {
     width: 1300px;
     height: 70%;
     display: flex;
@@ -31,101 +35,77 @@
     align-items: flex-end;
 }
 
-.detailInfo{
-    box-sizing: border-box;
-    width: 500px;
-    padding-bottom: 10px;
-}
-
-.detailTitleli{
-    height: 150px;
-    margin: 10px 0 10px 0;
-
-}
-
-.detailTitle{
-    font-size: 30px;
-
-}
-
-.detailcateLi{
-    margin-bottom: 15px;
-}
-
-.detailStory{
-    height: 140px;
-    color: black;
-}
-
-.detailText{
-    width: 750px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    text-align :justify;
-}
-
-.detailCateUl{
-    display: flex;
-    flex-direction: row;
-}
-
-.detailCateUl>li{
-    padding: 0 2px 0 2px;
-    border: 2px solid black;
-    background-color: green;
-    border-radius: 8px;
-}
-
-.mainposter{
-    width: 300px;
-    height: 400px;
-}
-
-.detail1Top{
-    width: auto;
-    height: auto;
-    color: black;
-}
-
-.more-text {
-    font-size: 16px;
-    color:blue;
-    cursor: pointer;
-
-}
-
-.less-text {
-    font-size: 16px;
-    color:blue;
-    cursor: pointer;
-    display: none;
-
-}
-
-.detail2{
+.detail2 {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding-top: 20px;
+    padding: 30px;
 }
 
-.detail2Wrap{
+.detail2Wrap {
     width: 1300px;
     flex-direction: column;
+    justify-content: center;
+    padding-left: 30px;
 }
 
-.voteAverage{
-    width: 200px;
-    margin: 40px 0 40px 40px;
+.detail3 {
+    width: 1300px;
+    height: 400px;
+    color: black;
+}
+
+.detail4 {
+    width: 1300px;
+    text-align: center;
+    color: black;
+    padding: 20px 30px;
+}
+
+/* 텍스트 스타일 */
+.detailTitle {
+    font-size: 30px;
+}
+
+.detailStory {
+    height: 140px;
+    color: #333;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
 }
 
-.detailComment{
+.detailText {
+    width: 750px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-align: justify;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+    margin-top: 10px;
+}
+
+.more-text, .less-text {
+    font-size: 16px;
+    color: #007bff;
+    cursor: pointer;
+}
+
+/* 버튼 스타일 */
+.detailComment > form > button {
+    width: 150px;
+    height: 100px;
+}
+
+.detailSubmitBtn > button {
+    width: 100px;
+    height: 100px;
+}
+
+/* 댓글 관련 스타일 */
+.detailComment {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -133,58 +113,90 @@
     height: 300px;
 }
 
-.detailComment>form{
+.detailComment > form {
     display: flex;
     flex-direction: row;
 }
 
-.detailComment>form>textarea{
+.detailComment > form > textarea {
     width: 650px;
     height: 150px;
     resize: none;
 }
 
-.detailComment>form>input{
+.detailComment > form > input {
     height: 15px;
 }
 
-.detailComment>form>button{
-    width: 150px;
-    height: 100px;
-
+.detailCommentUl {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.detail1Review{
-    display: flex;
-    flex-direction: column;
-    padding-left: 15px;
+.detailCommentLi {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.detailCheck{
-    padding-top: 25px;
+.detailUserName {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
 }
 
-.detailCheck>label{
-    color: black;
+.detailRegDate {
+    font-size: 14px;
+    color: #999;
 }
 
-.detailSubmitBtn{
+.detailContent {
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 5px;
     margin-top: 10px;
 }
 
-.detailSubmitBtn>button{
-    width: 100px;
-    height: 100px;
+.commentlikediv {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
 }
 
-.voteComment>span{
-    color: black;
+.commentlikeCount {
+    margin-right: 10px;
+}
+
+.commentLikeBtn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.commentLikeBtn:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+/* 평가 관련 스타일 */
+.voteAverage {
+    width: 200px;
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .rating {
-    float: none;
-    width: 200px;
     display: flex;
+    width: 200px;
 }
 
 .rating__input {
@@ -201,15 +213,7 @@
     width: 20px;
     height: 40px;
     display: block;
-    position: relative;
-    left: 0;
-    background-image: url('https://velog.velcdn.com/images/jellykelly/post/9957327f-f358-4c25-9989-5bb3dd5755d6/image.svg');
-    background-repeat: no-repeat;
     background-size: 40px;
-}
-
-.rating__label .star-icon.filled {
-    background-image: url('https://velog.velcdn.com/images/jellykelly/post/10caf033-b0ef-4d58-804b-6e33395e4ea5/image.svg');
 }
 
 .rating__label--full .star-icon {
@@ -225,42 +229,83 @@
     cursor: default;
 }
 
-.cancelRating:hover ~ .cancelText{
-    display: block;
+/* 카테고리 관련 스타일 */
+.detailCateUl {
+    display: flex;
+    flex-direction: row;
 }
 
-.detail3{
-    width: 1300px;
-    height: 400px;
+.detailCateUl > li {
+    padding: 0 2px;
+    border: 2px solid black;
+    background-color: green;
+    border-radius: 8px;
+}
+
+/* 포스터 및 배경 관련 스타일 */
+.mainposter {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 기타 스타일 */
+.detail1Top {
+    width: auto;
+    height: auto;
     color: black;
 }
 
-.detail4{
-    width: 1300px;
+.detailCheck {
+    padding-top: 25px;
+}
+
+.detailCheck > label {
+    color: black;
+}
+
+.detail1Review {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+}
+
+.cancelText {
+    position: relative;
+    border-bottom: 1px dotted black;
+}
+
+.cancelTextSpan {
+    color: black;
+}
+
+.cancelText .cancelTextSpan {
+    width: 85px;
+    background-color: #f4f4f4;
+    color: #000000;
     text-align: center;
-
-    color : black;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    transition: opacity 0.3s;
 }
 
-.detailCommentLi{
-    background-color: gray;
+.cancelText .cancelTextSpan::after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
 }
 
-.detailUserName{
-    background-color: pink;
-}
-
-.detailRegDate{
-    background-color: green;
-}
-
-.detailContent{
-    background-color: purple;
-}
-
-.detailCommentSetting :hover{
+.detailCommentSetting:hover {
     cursor: pointer;
     background-color: gray;
 }
-
-
